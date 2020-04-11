@@ -199,7 +199,7 @@ tunegrid <- expand.grid(.mtry = mtry)
 
 
 #Cross Validation:
-model_rf_caret <- caret::train(
+model_rf <- caret::train(
   # Model formula
   form = model_formula,
   # Training data
@@ -216,7 +216,7 @@ model_rf_caret <- caret::train(
   )
 
 # Studying the output:
-model_rf_caret
+model_rf
 
 ```
 
@@ -234,19 +234,19 @@ Using `model_rf` make predictions and submit to Kaggle.
 #Make predictions
 test <- test %>% 
   mutate(
-    logSalePrice_hat_rf_caret = predict(model_rf_caret, test),
-    SalePrice_hat_rf_caret = exp(logSalePrice_hat_rf_caret) -1
+    logSalePrice_hat_rf = predict(model_rf, test),
+    SalePrice_hat_rf = exp(logSalePrice_hat_rf) -1
   )
 glimpse(test)
 
 #Save excel file
-submission_rf_caret <- test %>%
-  mutate(SalePrice = SalePrice_hat_rf_caret) %>%
+submission_rf <- test %>%
+  mutate(SalePrice = SalePrice_hat_rf) %>%
   select(Id, SalePrice)
-write_csv(submission_rf_caret, "submission_rf_caret.csv")
+write_csv(submission_rf, "submission_rf.csv")
 
 ```
 
 
-![](images/score_screenshot_rfcaret.png){ width=100% }
+![](images/score_screenshot_rf.png){ width=100% }
 
